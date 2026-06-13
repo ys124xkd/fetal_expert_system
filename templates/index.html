@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetal Health Prediction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 1080px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            flex: 0 0 calc(50% - 10px);
+        }
+        @media (max-width: 768px) {
+            .form-group {
+                flex: 0 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <h1 class="text-center">Prediksi Kesehatan Janin</h1>
+    
+    <div class="form-container mt-3">
+        <div class="alert alert-warning">
+            <strong>Catatan: </strong>Sebelum Anda menggunakan aplikasi ini, pastikan Anda memiliki data yang akurat untuk setiap data yang diminta.
+        </div>
+        <form action="/predict" method="post">
+            <div class="form-row">
+                {% for feature in features %}
+                    <div class="form-group mt-3">
+                        <label for="{{ feature }}">{{ feature.replace('_', ' ').title() }}</label>
+                        {% if feature == 'baseline value' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Nilai Baseline per menit(110-160)" required>
+                        {% elif feature == 'accelerations' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Akselerasi per detik (0-0.02)" required>
+                        {% elif feature == 'fetal_movement' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Pergerakan Janin per detik (0 atau lebih)" required>
+                        {% elif feature == 'uterine_contractions' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Jumlah kontraksi rahim per detik (0 atau lebih)" required>
+                        {% elif feature == 'light_decelerations' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Dekelerasi Ringan per detik (0 atau lebih)" required>                        
+                        {% elif feature == 'severe_decelerations' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Dekelerasi Berat per detik (0 atau lebih)" required>
+                        {% elif feature == 'prolongued_decelerations' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Dekelerasi Prolong per second (0 atau lebih)" required>
+                        {% elif feature == 'abnormal_short_term_variability' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Variabilitas Jangka Pendek Abnormal (0-100%)" required>
+                        {% elif feature == 'mean_value_of_short_term_variability' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Rata-Rata Variabilitas Jangka Pendek (0 atau lebih)" required>
+                        {% elif feature == 'percentage_of_time_with_abnormal_long_term_variability' %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Persentase Waktu dengan Variabilitas Jangka Panjang Abnormal" required>
+                        {% else %}
+                            <input type="text" class="form-control" name="{{ feature }}" id="{{ feature }}" placeholder="Enter value for {{ feature.replace('_', ' ').title() }}" required>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Prediksi</button>
+        </form>
+        {% if prediction %}
+            <div class="alert alert-success mt-4">
+                <strong>Result:</strong> The fetal health is classified as {{ prediction }}.
+            </div>
+        {% endif %}
+        <div class="alert alert-info mt-4">
+            <strong>Akurasi Model:</strong> {{ accuracy }}%
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

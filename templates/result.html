@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Prediksi Kesehatan Janin</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .result-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1 class="text-center">Hasil Prediksi Kesehatan Janin</h1>
+    
+    <div class="result-container">
+        <h4>Input Data:</h4>
+        <ul>
+            {% for feature in features %}
+                <li><strong>{{ feature.replace('_', ' ').title() }}:</strong> {{ data[feature] }}</li>
+            {% endfor %}
+        </ul>
+        <div class="alert alert-success">
+            <strong>Kesehatan Janin Diklasifikasikan Sebagai: </strong>{{ prediction }}
+        </div>
+        {% if prediction == 'Normal' %}
+            <div class="alert alert-secondary mt-4">
+                <strong>Catatan:</strong> Pertahankan keadaan janin Anda dan lakukan pemeriksaan rutin.
+            </div>
+        {% elif prediction == 'Suspect' %}
+            <div class="alert alert-warning mt-4">
+                <strong>Catatan:</strong> Memerlukan penanganan khusus, segera konsultasikan dengan dokter Anda.
+            </div>
+        {% elif prediction == 'Pathological' %}
+            <div class="alert alert-danger mt-4">
+                <strong>Catatan:</strong> Kondisi serius, segera lakukan pemeriksaan lebih lanjut dan penanganan medis.
+            </div>
+        {% endif %}
+        <div class="alert alert-info mt-4">
+            <strong>Akurasi Model:</strong> {{ accuracy}}%
+        </div>
+        <a href="/" class="btn btn-primary btn-block">Kembali ke Formulir</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
