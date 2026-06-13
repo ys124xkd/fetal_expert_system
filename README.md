@@ -50,23 +50,13 @@ Pengguna memasukkan parameter kesehatan janin melalui form yang telah disediakan
 
 ![Halaman Input](screenshots/input.png)
 
-### Hasil Prediksi Normal
+### Prediksi
 
-Sistem mengklasifikasikan kondisi janin sebagai Normal dan menyarankan untuk tetap melakukan pemeriksaan rutin.
+![Prediksi](screenshots/prediksi.png)
 
-![Hasil Normal](screenshots/normal.png)
+### Hasil Prediksi 
 
-### Hasil Prediksi Suspect
-
-Sistem mengklasifikasikan kondisi janin sebagai Suspect sehingga diperlukan pemantauan dan konsultasi lebih lanjut.
-
-![Hasil Suspect](screenshots/suspect.png)
-
-### Hasil Prediksi Pathological
-
-Sistem mengklasifikasikan kondisi janin sebagai Pathological dan menyarankan pemeriksaan serta penanganan medis segera.
-
-![Hasil Pathological](screenshots/pathological.png)
+![Hasil prediksi](screenshots/hasil.png)
 
 ## Cara Menjalankan Aplikasi
 
